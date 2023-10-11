@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Input.gyro.attitude.eulerAngles.z);
+        Debug.Log(Input.gyro.attitude.eulerAngles.y);
         
         if(gyroEnable )
         {
@@ -45,12 +45,12 @@ public class PlayerMovement : MonoBehaviour
 
             //float pitch = gyroIn.x * sensitivity;
             float tilt = (gyroIn.z + 90) * sensitivity ;
-
+            // Apply the global rotation for left/right tilt without changing position
             Quaternion newRotation = initialRotation * Quaternion.Euler(0f, 0f, -tilt);
             player.transform.rotation = newRotation;
+        player.transform.Translate(player.transform.forward * forwardSpeed * Time.deltaTime, Space.World);
 
-            player.transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
-            
+
         }
     }
 }
